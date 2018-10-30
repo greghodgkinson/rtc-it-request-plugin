@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://com.greghodgkinson.rtcautomation.itRequestAutomation/server/predictedDeliveryDate"
+	targetNamespace="http://com.greghodgkinson.rtcautomation.itRequestAutomation/server/predictedDeliveryDate"
+	xmlns:process="http://com.ibm.team.process"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+	
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+		</xsd:documentation>
+		<xsd:documentation>
+			Used to configure the predicted delivery date participant.
+		</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:import namespace="http://com.ibm.team.process" schemaLocation="platform:/plugin/com.ibm.team.process.common/schema/ProcessSettings.xsd"/>
+	
+	<xsd:element name="followup-action" substitutionGroup="process:followup-action" type="predictedDeliveryDateType"/>
+
+	<xsd:complexType name="predictedDeliveryDateType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Used to configure the predicted delivery date participant.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:restriction base="process:followupActionType">
+				
+				<xsd:sequence>
+					
+                     <xsd:element name="slaCategoryMapping" type="slaCategoryMappingType" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>				
+				<xsd:attribute name="id" type="xsd:string" use="required" fixed="com.greghodgkinson.rtcautomation.workItemSave.predictedDeliveryDateParticipant"/>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="slaCategoryMappingType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Defines the mapping from an SLA category to a number of days.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="slaCategory" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="days" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:all>
+	</xsd:complexType>
+
+</xsd:schema>

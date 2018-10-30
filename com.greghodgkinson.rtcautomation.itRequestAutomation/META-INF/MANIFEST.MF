@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: IT Request Rules
+Bundle-SymbolicName: com.greghodgkinson.rtcautomation.itRequestAutomation;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Greg Hodgkinson
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: com.ibm.team.repository.common;bundle-version="1.4.2000",
+ com.ibm.team.repository.service;bundle-version="1.3.2000",
+ com.ibm.team.workitem.common;bundle-version="3.2.500",
+ com.ibm.team.workitem.service;bundle-version="3.1.1300",
+ com.ibm.team.process.common;bundle-version="1.3.2000",
+ com.ibm.team.process.service;bundle-version="1.3.2000",
+ org.eclipse.core.runtime;bundle-version="3.6.0"
+Import-Package: org.eclipse.core.runtime;version="3.4.0"

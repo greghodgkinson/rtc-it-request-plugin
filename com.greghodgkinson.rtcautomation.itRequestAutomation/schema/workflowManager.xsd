@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://com.greghodgkinson.rtcautomation.itRequestAutomation/server/workflowManager"
+	targetNamespace="http://com.greghodgkinson.rtcautomation.itRequestAutomation/server/workflowManager"
+	xmlns:process="http://com.ibm.team.process"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+	
+	<xsd:annotation>
+		<xsd:documentation xml:lang="en">
+		</xsd:documentation>
+		<xsd:documentation>
+			This file contains type definitions for the workflow manager
+			 operation participant. It defines the following:
+			 - agile project area name
+			 - agile work item category root
+			 - primary domain to agile category mappings
+		</xsd:documentation>
+	</xsd:annotation>
+	
+	<xsd:import namespace="http://com.ibm.team.process" schemaLocation="platform:/plugin/com.ibm.team.process.common/schema/ProcessSettings.xsd"/>
+	
+	<xsd:element name="followup-action" substitutionGroup="process:followup-action" type="workflowManagerType"/>
+
+	<xsd:complexType name="workflowManagerType">
+		<xsd:annotation>
+			<xsd:documentation>
+				This type defines configuration data for the workflow manager.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:restriction base="process:followupActionType">
+				
+				<xsd:sequence>
+					<xsd:element name="agileProjectArea" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+					<xsd:element name="agileCategoryRoot" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+					
+                     <xsd:element name="domainCategoryMapping" type="domainCategoryMappingType" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>				
+				<xsd:attribute name="id" type="xsd:string" use="required" fixed="com.greghodgkinson.rtcautomation.workItemSave.workflowManager"/>
+			</xsd:restriction>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="domainCategoryMappingType">
+		<xsd:annotation>
+			<xsd:documentation>
+				This type defines a mapping from a primary domain to a work item sub-category (off of the path of the agileCategoryRoot i.e. the full path for the category is agileCategoryRoot + wiSubcategory.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:all>
+			<xsd:element name="primaryDomain" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="wiSubcategory" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+		</xsd:all>
+	</xsd:complexType>
+
+</xsd:schema>

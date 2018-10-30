@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="com.ibm.team.process.service.operationAdvisors">
+      <operationAdvisor
+            class="com.greghodgkinson.rtcautomation.ItSolutionAgreementRulesAdvisor"
+            id="com.greghodgkinson.rtcautomation.itSolutionAgreementRules.operationAdvisor"
+            name="IT Solution Agreement Rules"
+            operationId="com.ibm.team.workitem.operation.workItemSave">
+         <extensionService
+               componentId="com.greghodgkinson.rtcautomation.itSolutionAgreementRules.extensionService"
+               implementationClass="com.greghodgkinson.rtcautomation.ItSolutionAgreementRulesAdvisor">
+               <prerequisites>
+               <requiredService
+                  interface="com.ibm.team.workitem.service.IWorkItemServer"/>
+               <requiredService
+                  interface="com.ibm.team.workitem.common.IWorkItemCommon"/>              
+            </prerequisites>
+         </extensionService>
+         <description>
+            Checks the following have been done before allowing the IT Solution Agreement task to be marked as done:
+
+- Ticket marked as in progress.
+- Due date has been set on the production test task.
+- Team set for all stories.
+         </description>
+      </operationAdvisor>
+         <operationAdvisor
+            class="com.greghodgkinson.rtcautomation.ItSolutionAssessmentRulesAdvisor"
+            id="com.greghodgkinson.rtcautomation.itSolutionAssessmentRules.operationAdvisor"
+            name="IT Solution Assessment Rules"
+            operationId="com.ibm.team.workitem.operation.workItemSave">
+         <extensionService
+               componentId="com.greghodgkinson.rtcautomation.itSolutionAssessmentRules.extensionService"
+               implementationClass="com.greghodgkinson.rtcautomation.ItSolutionAssessmentRulesAdvisor">
+               <prerequisites>
+               <requiredService
+                  interface="com.ibm.team.workitem.service.IWorkItemServer"/>
+               <requiredService
+                  interface="com.ibm.team.workitem.common.IWorkItemCommon"/>              
+            </prerequisites>
+         </extensionService>
+         <description>
+            Checks the following have been done before allowing the IT Solution Assessment task to be marked as done:
+
+- Primary domain must be set.
+- Primary application must be set.
+- Story points must be set on all stories.
+- SLA category must be set.
+- Solution agreement must be assigned to a team.
+         </description>
+      </operationAdvisor>
+      
+       <operationAdvisor
+            class="com.greghodgkinson.rtcautomation.ItRequestRulesAdvisor"
+            id="com.greghodgkinson.rtcautomation.itRequestRules.operationAdvisor"
+            name="IT Request Rules"
+            operationId="com.ibm.team.workitem.operation.workItemSave">
+         <extensionService
+               componentId="com.greghodgkinson.rtcautomation.itRequestRules.extensionService"
+               implementationClass="com.greghodgkinson.rtcautomation.ItRequestRulesAdvisor">
+               <prerequisites>
+               <requiredService
+                  interface="com.ibm.team.workitem.service.IWorkItemServer"/>
+               <requiredService
+                  interface="com.ibm.team.workitem.common.IWorkItemCommon"/>              
+            </prerequisites>
+         </extensionService>
+         <description>
+            Prevents the IT request being moved to 'In Progress' unless there is an approved approval - but only if the value stream is 'Other'.
+         </description>
+      </operationAdvisor>
+   </extension>
+   <extension
+         point="com.ibm.team.process.service.operationParticipants">
+      <operationParticipant
+            class="com.greghodgkinson.rtcautomation.WorkflowManagerParticipant"
+            id="com.greghodgkinson.rtcautomation.workItemSave.workflowManager"
+            name="Workflow Manager"
+            operationId="com.ibm.team.workitem.operation.workItemSave"
+            schema="schema/workflowManager.xsd">
+            <extensionService
+               componentId="com.greghodgkinson.rtcautomation.workflowManager.extensionService"
+               implementationClass="com.greghodgkinson.rtcautomation.WorkflowManagerParticipant">
+               <prerequisites>
+               <requiredService
+                  interface="com.ibm.team.workitem.service.IWorkItemServer"/>
+               <requiredService
+                  interface="com.ibm.team.workitem.common.IWorkItemCommon"/>              
+            </prerequisites>
+         </extensionService>
+         <description>
+            Sets the Workable Date on workflow items to indicate they are ready to be worked on. This date only gets set on a work item when there are no depends on work items blocking it.
+         </description>
+      </operationParticipant>
+      <operationParticipant
+            class="com.greghodgkinson.rtcautomation.CascadeResolutionParticipant"
+            id="com.greghodgkinson.rtcautomation.workItemSave.cascadeResolutionParticipant"
+            name="Cascade Resolution"
+            operationId="com.ibm.team.workitem.operation.workItemSave">
+            <extensionService
+               componentId="com.greghodgkinson.rtcautomation.cascadeResolution.extensionService"
+               implementationClass="com.greghodgkinson.rtcautomation.CascadeResolutionParticipant">
+               <prerequisites>
+               <requiredService
+                  interface="com.ibm.team.workitem.service.IWorkItemServer"/>
+               <requiredService
+                  interface="com.ibm.team.workitem.common.IWorkItemCommon"/>              
+            </prerequisites>
+         </extensionService>
+         <description>
+            Cascade invalidation of work item, but disallow any other resolution if any child work item is not resolved.
+         </description>
+      </operationParticipant>
+      <operationParticipant
+            class="com.greghodgkinson.rtcautomation.PredictedDeliveryDateParticipant"
+            id="com.greghodgkinson.rtcautomation.workItemSave.predictedDeliveryDateParticipant"
+            name="Predicted Delivery Date"
+            operationId="com.ibm.team.workitem.operation.workItemSave"
+            schema="schema/predictedDeliveryDate.xsd">
+            <extensionService
+               componentId="com.greghodgkinson.rtcautomation.predictedDeliveryDate.extensionService"
+               implementationClass="com.greghodgkinson.rtcautomation.PredictedDeliveryDateParticipant">
+               <prerequisites>
+               <requiredService
+                  interface="com.ibm.team.workitem.service.IWorkItemServer"/>
+               <requiredService
+                  interface="com.ibm.team.workitem.common.IWorkItemCommon"/>              
+            </prerequisites>
+         </extensionService>
+         <description>
+            Predict the delivery date based on the SLA category and the IT solution agreement's workable date.
+         </description>
+      </operationParticipant>
+   </extension>
+
+</plugin>
